@@ -2,20 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
 import { apiUrl } from '@/utils/api';
+import type { Membership, PatientDocument } from '@/types/models';
 
 export default function CRMDashboard() {
-  const [memberships, setMemberships] = useState([]);
-  const [documents, setDocuments] = useState([]);
+  const [memberships, setMemberships] = useState<Membership[]>([]);
+  const [documents, setDocuments] = useState<PatientDocument[]>([]);
 
   useEffect(() => {
     fetch(apiUrl('/api/crm/memberships'))
       .then(res => res.json())
-      .then(data => setMemberships(data))
+      .then((data: Membership[]) => setMemberships(Array.isArray(data) ? data : []))
       .catch(console.error);
 
     fetch(apiUrl('/api/crm/documents'))
       .then(res => res.json())
-      .then(data => setDocuments(data))
+      .then((data: PatientDocument[]) => setDocuments(Array.isArray(data) ? data : []))
       .catch(console.error);
   }, []);
 
@@ -33,7 +34,7 @@ export default function CRMDashboard() {
             <button className={styles.btnPrimary}>+ Nueva Suscripción</button>
           </div>
           <div className={styles.calendarList}>
-            {memberships.length > 0 ? memberships.map((m: any) => (
+            {memberships.length > 0 ? memberships.map((m) => (
               <div key={m.id} className={styles.appointmentRow}>
                 <div>{m.patient?.firstName} {m.patient?.lastName}</div>
                 <div>{m.planName}</div>
@@ -49,7 +50,7 @@ export default function CRMDashboard() {
             <button className={styles.btnOutline}>Subir Consentimiento</button>
           </div>
           <div className={styles.calendarList}>
-            {documents.length > 0 ? documents.map((doc: any) => (
+            {documents.length > 0 ? documents.map((doc) => (
               <div key={doc.id} className={styles.appointmentRow}>
                 <div>{doc.patient?.firstName} {doc.patient?.lastName}</div>
                 <div>{doc.type}</div>

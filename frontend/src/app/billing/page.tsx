@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import styles from './billing.module.css';
 import { apiUrl } from '@/utils/api';
 import { formatCurrencyDOP } from '@/utils/currency';
+import { useToast } from '@/components/Toast';
+import type { Patient } from '@/types/models';
 
 interface InvoiceItem {
   id: string;
@@ -12,9 +14,11 @@ interface InvoiceItem {
 }
 
 export default function BillingDashboard() {
+  const { notify } = useToast();
   const [patientId, setPatientId] = useState('');
-  const [patients, setPatients] = useState<any[]>([]);
+  const [patients, setPatients] = useState<Patient[]>([]);
   const [items, setItems] = useState<InvoiceItem[]>([]);
+  const [generating, setGenerating] = useState(false);
 
   const subTotal = items.reduce((acc, item) => acc + (item.quantity * item.unitPriceDop), 0);
   const itbis = subTotal * 0.18;
@@ -23,7 +27,7 @@ export default function BillingDashboard() {
   useEffect(() => {
     fetch(apiUrl('/api/patients'))
       .then((res) => res.json())
-      .then((data) => setPatients(data))
+      .then((data: Patient[]) => setPatients(Array.isArray(data) ? data : []))
       .catch((err) => console.error(err));
   }, []);
 
@@ -42,9 +46,10 @@ export default function BillingDashboard() {
 
   const handleGenerateInvoice = async () => {
     if (!patientId || items.length === 0) {
-      alert("Por favor seleccione un paciente y agregue al menos un artículo.");
+      notify('Seleccione un paciente y agregue al menos un artículo.', 'info');
       return;
     }
+    setGenerating(true);
     try {
       const response = await fetch(apiUrl('/api/invoices'), {
         method: 'POST',
@@ -52,14 +57,16 @@ export default function BillingDashboard() {
         body: JSON.stringify({ patientId, items })
       });
       if (response.ok) {
-        alert("¡Factura generada con éxito!");
+        notify('¡Factura generada con éxito!', 'success');
         setItems([]);
       } else {
-        alert("Error al generar factura");
+        notify('No se pudo generar la factura.', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert("Error de red.");
+      notify('Error de red. Verifique su conexión.', 'error');
+    } finally {
+      setGenerating(false);
     }
   };
 
@@ -137,12 +144,13 @@ export default function BillingDashboard() {
               <span>{formatCurrencyDOP(total)}</span>
             </div>
             
-            <button 
-              className={styles.btn} 
+            <button
+              className={styles.btn}
               style={{ width: '100%', marginTop: '2rem' }}
               onClick={handleGenerateInvoice}
+              disabled={generating}
             >
-              Generar Factura
+              {generating ? 'Generando…' : 'Generar Factura'}
             </button>
           </div>
         )}

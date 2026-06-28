@@ -3,15 +3,7 @@ import { useEffect, useState } from 'react';
 import styles from './inventory.module.css';
 import { apiUrl } from '@/utils/api';
 import { formatCurrencyDOP } from '@/utils/currency';
-
-interface InventoryItem {
-  id: string;
-  name: string;
-  sku: string | null;
-  priceDop: number;
-  stock: number;
-  minStockThreshold: number;
-}
+import type { InventoryItem } from '@/types/models';
 
 export default function InventoryDashboard() {
   const [items, setItems] = useState<InventoryItem[]>([]);

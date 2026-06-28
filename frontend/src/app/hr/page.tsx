@@ -2,20 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
 import { apiUrl } from '@/utils/api';
+import type { Staff, Shift } from '@/types/models';
 
 export default function HRDashboard() {
-  const [staff, setStaff] = useState([]);
-  const [shifts, setShifts] = useState([]);
+  const [staff, setStaff] = useState<Staff[]>([]);
+  const [shifts, setShifts] = useState<Shift[]>([]);
 
   useEffect(() => {
     fetch(apiUrl('/api/hr/staff'))
       .then(res => res.json())
-      .then(data => setStaff(data))
+      .then((data: Staff[]) => setStaff(Array.isArray(data) ? data : []))
       .catch(console.error);
-      
+
     fetch(apiUrl('/api/hr/shifts'))
       .then(res => res.json())
-      .then(data => setShifts(data))
+      .then((data: Shift[]) => setShifts(Array.isArray(data) ? data : []))
       .catch(console.error);
   }, []);
 
@@ -33,7 +34,7 @@ export default function HRDashboard() {
             <button className={styles.btnPrimary}>+ Agregar Personal</button>
           </div>
           <div className={styles.calendarList}>
-            {staff.length > 0 ? staff.map((s: any) => (
+            {staff.length > 0 ? staff.map((s) => (
               <div key={s.id} className={styles.appointmentRow}>
                 <div>{s.name}</div>
                 <div className={styles.badge}>{s.role}</div>
@@ -48,7 +49,7 @@ export default function HRDashboard() {
             <button className={styles.btnOutline}>Asignar Turno</button>
           </div>
           <div className={styles.calendarList}>
-            {shifts.length > 0 ? shifts.map((shift: any) => (
+            {shifts.length > 0 ? shifts.map((shift) => (
               <div key={shift.id} className={styles.appointmentRow}>
                 <div>{shift.staff?.name || 'Personal Desconocido'}</div>
                 <div>{new Date(shift.startTime).toLocaleString()} - {new Date(shift.endTime).toLocaleTimeString()}</div>

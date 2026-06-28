@@ -3,14 +3,15 @@ import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
 import { apiUrl } from '@/utils/api';
 import { formatCurrencyDOP } from '@/utils/currency';
+import type { Expense } from '@/types/models';
 
 export default function FinanceDashboard() {
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
 
   useEffect(() => {
     fetch(apiUrl('/api/finance/expenses'))
       .then(res => res.json())
-      .then(data => setExpenses(data))
+      .then((data: Expense[]) => setExpenses(Array.isArray(data) ? data : []))
       .catch(console.error);
   }, []);
 
@@ -27,7 +28,7 @@ export default function FinanceDashboard() {
           <button className={styles.btnPrimary}>+ Registrar Gasto</button>
         </div>
         <div className={styles.calendarList}>
-          {expenses.length > 0 ? expenses.map((expense: any) => (
+          {expenses.length > 0 ? expenses.map((expense) => (
             <div key={expense.id} className={styles.appointmentRowWide}>
               <div>{new Date(expense.date).toLocaleDateString()}</div>
               <div>{expense.description}</div>

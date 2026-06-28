@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Sidebar from "@/components/Sidebar";
+import { ToastProvider } from "@/components/Toast";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -32,12 +33,14 @@ export default function RootLayout({
         <link href="https://fonts.cdnfonts.com/css/google-sans" rel="stylesheet" />
       </head>
       <body>
-        <div style={{ display: 'flex', minHeight: '100vh' }}>
-          <Sidebar />
-          <main style={{ flex: 1, padding: '2rem', overflowY: 'auto', minWidth: 0 }}>
-            {children}
-          </main>
-        </div>
+        <ToastProvider>
+          <div style={{ display: 'flex', minHeight: '100vh' }}>
+            <Sidebar />
+            <main style={{ flex: 1, padding: '2rem', overflowY: 'auto', minWidth: 0 }}>
+              {children}
+            </main>
+          </div>
+        </ToastProvider>
       </body>
     </html>
   );

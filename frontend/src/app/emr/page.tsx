@@ -2,14 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
 import { apiUrl } from '@/utils/api';
+import type { MedicalRecord } from '@/types/models';
 
 export default function EMRDashboard() {
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState<MedicalRecord[]>([]);
 
   useEffect(() => {
     fetch(apiUrl('/api/emr/medical-records'))
       .then(res => res.json())
-      .then(data => setRecords(data))
+      .then((data: MedicalRecord[]) => setRecords(Array.isArray(data) ? data : []))
       .catch(console.error);
   }, []);
 
@@ -27,7 +28,7 @@ export default function EMRDashboard() {
         </div>
         
         <div className={styles.calendarList}>
-          {records.length > 0 ? records.map((record: any) => (
+          {records.length > 0 ? records.map((record) => (
             <div key={record.id} className={styles.appointmentRow}>
               <div>{new Date(record.createdAt).toLocaleDateString()}</div>
               <div>TBUT OD: {record.tbutOD || 'N/A'} | OS: {record.tbutOS || 'N/A'}</div>

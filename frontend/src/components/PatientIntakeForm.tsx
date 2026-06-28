@@ -2,16 +2,30 @@
 import React, { useState } from 'react';
 import styles from '../app/dashboard.module.css';
 import { apiUrl } from '@/utils/api';
+import { useToast } from './Toast';
+
+interface PatientForm {
+  firstName: string;
+  lastName: string;
+  cedula: string;
+  email: string;
+  phone: string;
+  dob: string;
+}
+
+const EMPTY_FORM: PatientForm = {
+  firstName: '',
+  lastName: '',
+  cedula: '',
+  email: '',
+  phone: '',
+  dob: '',
+};
 
 export default function PatientIntakeForm() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    cedula: '',
-    email: '',
-    phone: '',
-    dob: '',
-  });
+  const { notify } = useToast();
+  const [formData, setFormData] = useState<PatientForm>(EMPTY_FORM);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,6 +33,7 @@ export default function PatientIntakeForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       const response = await fetch(apiUrl('/api/patients'), {
         method: 'POST',
@@ -26,14 +41,16 @@ export default function PatientIntakeForm() {
         body: JSON.stringify(formData)
       });
       if (response.ok) {
-        alert('¡Paciente registrado exitosamente!');
-        setFormData({ firstName: '', lastName: '', cedula: '', email: '', phone: '', dob: '' });
+        notify('¡Paciente registrado exitosamente!', 'success');
+        setFormData(EMPTY_FORM);
       } else {
-        alert('Error registrando paciente');
+        notify('No se pudo registrar el paciente.', 'error');
       }
     } catch (error) {
       console.error(error);
-      alert('Error de red.');
+      notify('Error de red. Verifique su conexión.', 'error');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -73,7 +90,9 @@ export default function PatientIntakeForm() {
         </div>
         
         <div className={styles.formActions}>
-          <button type="submit" className={styles.btnPrimary}>Registrar Paciente</button>
+          <button type="submit" className={styles.btnPrimary} disabled={submitting}>
+            {submitting ? 'Registrando…' : 'Registrar Paciente'}
+          </button>
         </div>
       </form>
     </div>

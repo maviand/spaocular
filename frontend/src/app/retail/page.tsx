@@ -2,20 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
 import { apiUrl } from '@/utils/api';
+import type { Supplier, Equipment } from '@/types/models';
 
 export default function RetailDashboard() {
-  const [suppliers, setSuppliers] = useState([]);
-  const [equipment, setEquipment] = useState([]);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [equipment, setEquipment] = useState<Equipment[]>([]);
 
   useEffect(() => {
     fetch(apiUrl('/api/retail/suppliers'))
       .then(res => res.json())
-      .then(data => setSuppliers(data))
+      .then((data: Supplier[]) => setSuppliers(Array.isArray(data) ? data : []))
       .catch(console.error);
 
     fetch(apiUrl('/api/retail/equipment'))
       .then(res => res.json())
-      .then(data => setEquipment(data))
+      .then((data: Equipment[]) => setEquipment(Array.isArray(data) ? data : []))
       .catch(console.error);
   }, []);
 
@@ -33,7 +34,7 @@ export default function RetailDashboard() {
             <button className={styles.btnPrimary}>+ Nueva Orden de Compra</button>
           </div>
           <div className={styles.calendarList}>
-            {suppliers.length > 0 ? suppliers.map((sup: any) => (
+            {suppliers.length > 0 ? suppliers.map((sup) => (
               <div key={sup.id} className={styles.appointmentRow}>
                 <div>{sup.name}</div>
                 <div>{sup.contact || 'Sin contacto'}</div>
@@ -48,11 +49,11 @@ export default function RetailDashboard() {
             <button className={styles.btnOutline}>+ Registrar Calibración</button>
           </div>
           <div className={styles.calendarList}>
-            {equipment.length > 0 ? equipment.map((eq: any) => (
+            {equipment.length > 0 ? equipment.map((eq) => (
               <div key={eq.id} className={styles.appointmentRow}>
                 <div>{eq.name}</div>
                 <div className={styles.badge}>
-                  Mantenimiento: {eq.lastMaintenance ? new Date(eq.lastMaintenance).toLocaleDateString() : 'N/A'}
+                  Última Calibración: {eq.lastCalibration ? new Date(eq.lastCalibration).toLocaleDateString() : 'N/A'}
                 </div>
               </div>
             )) : <div className={styles.emptyState}>No hay registros de equipos.</div>}

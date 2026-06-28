@@ -2,8 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../app/dashboard.module.css';
 
+interface CalendarAppointment {
+  id: string;
+  time: string;
+  patientName: string;
+  reason: string;
+  status: string;
+}
+
 export default function DailyCalendar() {
-  const [appointments, setAppointments] = useState<any[]>([]);
+  const [appointments, setAppointments] = useState<CalendarAppointment[]>([]);
 
   useEffect(() => {
     // In a real app, this would fetch from /api/appointments?date=today
