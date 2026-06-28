@@ -1,18 +1,19 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
+import { apiUrl } from '@/utils/api';
 
 export default function CRMDashboard() {
   const [memberships, setMemberships] = useState([]);
   const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/crm/memberships')
+    fetch(apiUrl('/api/crm/memberships'))
       .then(res => res.json())
       .then(data => setMemberships(data))
       .catch(console.error);
 
-    fetch('http://localhost:4000/api/crm/documents')
+    fetch(apiUrl('/api/crm/documents'))
       .then(res => res.json())
       .then(data => setDocuments(data))
       .catch(console.error);

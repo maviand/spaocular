@@ -1,18 +1,19 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
+import { apiUrl } from '@/utils/api';
 
 export default function RetailDashboard() {
   const [suppliers, setSuppliers] = useState([]);
   const [equipment, setEquipment] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/retail/suppliers')
+    fetch(apiUrl('/api/retail/suppliers'))
       .then(res => res.json())
       .then(data => setSuppliers(data))
       .catch(console.error);
 
-    fetch('http://localhost:4000/api/retail/equipment')
+    fetch(apiUrl('/api/retail/equipment'))
       .then(res => res.json())
       .then(data => setEquipment(data))
       .catch(console.error);

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import styles from './inventory.module.css';
+import { apiUrl } from '@/utils/api';
 import { formatCurrencyDOP } from '@/utils/currency';
 
 interface InventoryItem {
@@ -17,16 +18,25 @@ export default function InventoryDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/inventory')
+    fetch(apiUrl('/api/inventory'))
       .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-        setLoading(false);
-      })
-      .catch((err) => console.error(err));
+      .then((data) => setItems(Array.isArray(data) ? data : []))
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className={styles.container}>Cargando inventario...</div>;
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Inventario de Clínica</h1>
+        </div>
+        <div className={styles.card}>
+          <div className={styles.loading}>Cargando inventario…</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>

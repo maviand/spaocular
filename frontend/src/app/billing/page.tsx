@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import styles from './billing.module.css';
+import { apiUrl } from '@/utils/api';
 import { formatCurrencyDOP } from '@/utils/currency';
 
 interface InvoiceItem {
@@ -20,7 +21,7 @@ export default function BillingDashboard() {
   const total = subTotal + itbis;
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/patients')
+    fetch(apiUrl('/api/patients'))
       .then((res) => res.json())
       .then((data) => setPatients(data))
       .catch((err) => console.error(err));
@@ -45,7 +46,7 @@ export default function BillingDashboard() {
       return;
     }
     try {
-      const response = await fetch('http://localhost:4000/api/invoices', {
+      const response = await fetch(apiUrl('/api/invoices'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ patientId, items })

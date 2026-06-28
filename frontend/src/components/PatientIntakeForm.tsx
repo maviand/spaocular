@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import styles from '../app/dashboard.module.css';
+import { apiUrl } from '@/utils/api';
 
 export default function PatientIntakeForm() {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ export default function PatientIntakeForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/api/patients', {
+      const response = await fetch(apiUrl('/api/patients'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

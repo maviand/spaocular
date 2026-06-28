@@ -1,12 +1,13 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
+import { apiUrl } from '@/utils/api';
 
 export default function EMRDashboard() {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/emr/medical-records')
+    fetch(apiUrl('/api/emr/medical-records'))
       .then(res => res.json())
       .then(data => setRecords(data))
       .catch(console.error);

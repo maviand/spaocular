@@ -1,18 +1,19 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import styles from '../dashboard.module.css';
+import { apiUrl } from '@/utils/api';
 
 export default function HRDashboard() {
   const [staff, setStaff] = useState([]);
   const [shifts, setShifts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/hr/staff')
+    fetch(apiUrl('/api/hr/staff'))
       .then(res => res.json())
       .then(data => setStaff(data))
       .catch(console.error);
       
-    fetch('http://localhost:4000/api/hr/shifts')
+    fetch(apiUrl('/api/hr/shifts'))
       .then(res => res.json())
       .then(data => setShifts(data))
       .catch(console.error);

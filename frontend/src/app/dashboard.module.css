@@ -4,6 +4,7 @@
   margin: 0 auto;
   position: relative;
   z-index: 1;
+  animation: lc-fade-in 0.4s ease both;
 }
 
 .header {
@@ -76,9 +77,13 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  border: 1px solid rgba(15, 240, 212, 0.05);
+  border: 1px solid var(--ring);
   pointer-events: none;
-  box-shadow: inset 0 0 0 20px rgba(15, 240, 212, 0.02), inset 0 0 0 40px rgba(15, 240, 212, 0.01);
+  box-shadow: inset 0 0 0 20px var(--ring), inset 0 0 0 40px var(--ring);
+}
+
+.card:hover {
+  border-color: var(--accent-border);
 }
 
 .cardHeader {
@@ -125,10 +130,14 @@
 }
 
 .btnPrimary:hover {
-  background: #fff;
-  color: #0f172a;
-  box-shadow: 0 0 15px var(--accent);
+  background: var(--accent-hover);
+  color: var(--accent-contrast);
+  box-shadow: 0 0 18px var(--glow);
   transform: translateY(-2px);
+}
+
+.btnPrimary:active {
+  transform: translateY(0);
 }
 
 .btnOutline {
@@ -189,23 +198,27 @@
 .badge {
   background: var(--accent-light);
   color: var(--accent);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
   font-weight: 600;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  border: 1px solid rgba(15, 240, 212, 0.3);
+  border: 1px solid var(--accent-border);
+  white-space: nowrap;
 }
 
 .badgeDanger {
-  background: rgba(255, 71, 109, 0.15);
+  background: var(--danger-bg);
   color: var(--danger);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
   font-weight: 600;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  border: 1px solid rgba(255, 71, 109, 0.3);
+  border: 1px solid var(--danger);
+  white-space: nowrap;
 }
 
 .emptyState {
@@ -216,4 +229,142 @@
   font-size: 0.9rem;
   border: 1px dashed var(--border);
   border-radius: 8px;
+}
+
+/* ---------- Wide appointment row (e.g. Finance: date | desc | category | amount) ---------- */
+.appointmentRowWide {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.appointmentRowWide:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+  background: var(--accent-light);
+}
+
+.appointmentRowWide > div {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.amount {
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Calendar appointment internals ---------- */
+.time {
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.details strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.details span {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+/* ---------- Card subtitle ---------- */
+.cardSubtitle {
+  margin: 0.25rem 0 0 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Forms ---------- */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 560px) {
+  .formGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:hover {
+  border-color: var(--accent-border);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+/* Normalize native date-picker icon in dark mode */
+.input[type='date'] {
+  color-scheme: light dark;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border);
 }
