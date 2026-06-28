@@ -1,0 +1,67 @@
+/* LACRYMAL CLARITY - DESIGN PHILOSOPHY */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Darkest possible blue, containing warmth without announcing it */
+  --bg-primary: #020b14;
+  --bg-secondary: #051424;
+  --bg-tertiary: #0a1f35;
+  
+  /* Phosphorescent teal */
+  --accent: #0ff0d4;
+  --accent-light: rgba(15, 240, 212, 0.15);
+  
+  /* Surgical light on stainless steel */
+  --text-primary: #f0f7ff;
+  --text-secondary: #8ba5c4;
+  --border: #14304d;
+  
+  /* Status Colors */
+  --danger: #ff476d;
+  --success: #00d486;
+
+  /* Fonts */
+  --font-mono: var(--font-geist-mono), monospace;
+  --font-sans: var(--font-geist-sans), sans-serif;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  
+  /* Texture: Fine horizontal marks - scan lines */
+  background-image: linear-gradient(rgba(20, 48, 77, 0.05) 1px, transparent 1px);
+  background-size: 100% 4px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Utilities for Clinical Data Readouts */
+.data-readout {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  font-size: 0.9em;
+}
+
+.architectural-border {
+  border: 1px solid var(--border);
+  box-shadow: inset 0 0 20px rgba(15, 240, 212, 0.02);
+}

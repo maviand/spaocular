@@ -1,0 +1,86 @@
+.sidebar {
+  width: 260px;
+  background-color: var(--bg-primary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  box-shadow: inset -10px 0 30px rgba(0,0,0,0.5);
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.logoImage {
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 20px rgba(15, 240, 212, 0.2);
+  margin-bottom: 1rem;
+}
+
+.logoTitle {
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  font-size: 1.2rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.link {
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+}
+
+.link::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: transparent;
+  margin-right: 10px;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--accent);
+  border-color: var(--border);
+}
+
+.link:hover::before {
+  background-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.footer {
+  margin-top: auto;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--border);
+}

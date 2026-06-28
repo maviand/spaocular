@@ -1,0 +1,227 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Patient {
+  id                       String        @id @default(uuid())
+  firstName                String
+  lastName                 String
+  cedula                   String?       @unique
+  email                    String?       @unique
+  phone                    String?
+  dob                      DateTime?
+  addressStreet            String?
+  addressSector            String?
+  addressCity              String?       @default("Santo Domingo")
+  emergencyContactName     String?
+  emergencyContactPhone    String?
+  emergencyContactRelation String?
+  
+  createdAt                DateTime      @default(now())
+  updatedAt                DateTime      @updatedAt
+
+  appointments             Appointment[]
+  invoices                 Invoice[]
+  medicalRecords           MedicalRecord[]
+  treatmentLogs            TreatmentLog[]
+  memberships              Membership[]
+  documents                Document[]
+}
+
+model Treatment {
+  id              String        @id @default(uuid())
+  name            String        // e.g. "IPL", "LipiFlow", "BlephEx"
+  description     String?
+  durationMinutes Int           @default(30)
+  priceDop        Float
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  appointments    Appointment[] // Many-to-many relationship
+  treatmentLogs   TreatmentLog[]
+}
+
+model Appointment {
+  id        String   @id @default(uuid())
+  date      DateTime
+  reason    String
+  notes     String?
+  
+  patientId String
+  patient   Patient  @relation(fields: [patientId], references: [id])
+  
+  roomId    String?
+  room      Room?    @relation(fields: [roomId], references: [id])
+  
+  treatments Treatment[] // Many-to-many relationship
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InventoryItem {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  sku         String?  @unique
+  priceDop    Float
+  stock       Int      @default(0)
+  minStockThreshold Int      @default(5)
+  
+  supplierId  String?
+  supplier    Supplier? @relation(fields: [supplierId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Invoice {
+  id                 String   @id @default(uuid())
+  subTotalDop        Float    @default(0)
+  itbisDop           Float    @default(0) // 18% tax
+  totalDop           Float    @default(0) // subTotal + itbis
+  status             String   @default("PENDING") // e.g. PENDING, PAID, CANCELLED
+  insuranceClaimId   String?
+  superbillGenerated Boolean  @default(false)
+  
+  patientId          String
+  patient            Patient  @relation(fields: [patientId], references: [id])
+  
+  items              InvoiceItem[]
+  
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model InvoiceItem {
+  id            String   @id @default(uuid())
+  invoiceId     String
+  invoice       Invoice  @relation(fields: [invoiceId], references: [id])
+  
+  description   String   
+  quantity      Int      @default(1)
+  unitPriceDop  Float
+  totalPriceDop Float    
+}
+
+// -----------------------------------------------------
+// NEW ENTERPRISE MODELS
+// -----------------------------------------------------
+
+// 1. Clinical & Patient Management (EMR)
+model MedicalRecord {
+  id              String   @id @default(uuid())
+  patientId       String
+  patient         Patient  @relation(fields: [patientId], references: [id])
+  visualAcuityOD  String?  // Right eye
+  visualAcuityOS  String?  // Left eye
+  tbutOD          Float?   // Tear break-up time
+  tbutOS          Float?
+  imagingUrl      String?  // Link to meibomian gland imaging
+  notes           String?
+  createdAt       DateTime @default(now())
+}
+
+model TreatmentLog {
+  id              String   @id @default(uuid())
+  patientId       String
+  patient         Patient  @relation(fields: [patientId], references: [id])
+  treatmentId     String
+  treatment       Treatment @relation(fields: [treatmentId], references: [id])
+  parameters      String?  // e.g., "IPL Level 3"
+  outcome         String?
+  date            DateTime @default(now())
+}
+
+model Room {
+  id          String   @id @default(uuid())
+  name        String
+  appointments Appointment[]
+}
+
+// 2. Retail & Inventory Management
+model Supplier {
+  id        String   @id @default(uuid())
+  name      String
+  contact   String?
+  items     InventoryItem[]
+}
+
+model Equipment {
+  id              String   @id @default(uuid())
+  name            String
+  lastCalibration DateTime?
+  nextCalibration DateTime?
+  logs            MaintenanceLog[]
+}
+
+model MaintenanceLog {
+  id          String   @id @default(uuid())
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  notes       String
+  date        DateTime @default(now())
+}
+
+// 3. Financial & Billing
+model Expense {
+  id          String   @id @default(uuid())
+  description String
+  amountDop   Float
+  category    String   // e.g., "Consumables", "Equipment"
+  date        DateTime @default(now())
+}
+
+// 4. Patient CRM
+model Membership {
+  id          String   @id @default(uuid())
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  planName    String   // e.g., "Dry Eye Maintenance"
+  status      String   // ACTIVE, CANCELLED
+  renewalDate DateTime
+}
+
+model Document {
+  id          String   @id @default(uuid())
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  type        String   // "Consent", "Questionnaire"
+  fileUrl     String
+  signed      Boolean  @default(false)
+}
+
+// 5. Clinic Operations & HR
+model Staff {
+  id          String   @id @default(uuid())
+  name        String
+  role        String   // "Optometrist", "Aesthetician"
+  hourlyRate  Float?
+  shifts      Shift[]
+  commissions Commission[]
+}
+
+model Shift {
+  id          String   @id @default(uuid())
+  staffId     String
+  staff       Staff    @relation(fields: [staffId], references: [id])
+  startTime   DateTime
+  endTime     DateTime
+}
+
+model Commission {
+  id          String   @id @default(uuid())
+  staffId     String
+  staff       Staff    @relation(fields: [staffId], references: [id])
+  amountDop   Float
+  reason      String   // e.g., "Retail Product Conversion"
+  date        DateTime @default(now())
+}
