@@ -4,27 +4,43 @@
 @tailwind utilities;
 
 :root {
-  /* Darkest possible blue, containing warmth without announcing it */
-  --bg-primary: #020b14;
-  --bg-secondary: #051424;
-  --bg-tertiary: #0a1f35;
+  /* LIGHT MODE (Default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f7f9;
+  --bg-tertiary: #e9eff5;
   
-  /* Phosphorescent teal */
-  --accent: #0ff0d4;
-  --accent-light: rgba(15, 240, 212, 0.15);
+  --accent: #0077b6; /* Medical blue */
+  --accent-light: rgba(0, 119, 182, 0.1);
   
-  /* Surgical light on stainless steel */
-  --text-primary: #f0f7ff;
-  --text-secondary: #8ba5c4;
-  --border: #14304d;
+  --text-primary: #1d3557;
+  --text-secondary: #457b9d;
+  --border: #dbe4eb;
   
-  /* Status Colors */
-  --danger: #ff476d;
-  --success: #00d486;
+  --danger: #e63946;
+  --success: #2a9d8f;
 
-  /* Fonts */
-  --font-mono: var(--font-geist-mono), monospace;
-  --font-sans: var(--font-geist-sans), sans-serif;
+  /* Font */
+  --font-sans: 'Product Sans', 'Google Sans', sans-serif;
+  --font-mono: 'Product Sans', 'Google Sans', sans-serif; /* Forcing Google Sans everywhere */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* DARK MODE (Lacrymal Clarity) */
+    --bg-primary: #020b14;
+    --bg-secondary: #051424;
+    --bg-tertiary: #0a1f35;
+    
+    --accent: #0ff0d4; /* Phosphorescent teal */
+    --accent-light: rgba(15, 240, 212, 0.15);
+    
+    --text-primary: #f0f7ff;
+    --text-secondary: #8ba5c4;
+    --border: #14304d;
+    
+    --danger: #ff476d;
+    --success: #00d486;
+  }
 }
 
 body {

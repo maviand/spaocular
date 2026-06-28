@@ -7,8 +7,8 @@ export default function DashboardPage() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Spa Ocular Dashboard</h1>
-        <p className={styles.subtitle}>Clinic Management System</p>
+        <h1 className={styles.title}>Buenos días, Dr. Silva</h1>
+        <p className={styles.subtitle}>Resumen Operativo de la Clínica - Hoy</p>
       </header>
 
       <div className={styles.dashboardGrid}>

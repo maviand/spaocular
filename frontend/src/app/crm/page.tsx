@@ -21,15 +21,15 @@ export default function CRMDashboard() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Patient CRM</h1>
-        <p className={styles.subtitle}>Memberships, Subscriptions, & Documents</p>
+        <h1 className={styles.title}>Pacientes (CRM)</h1>
+        <p className={styles.subtitle}>Membresías, Lealtad y Documentos Legales</p>
       </header>
 
       <div className={styles.dashboardGrid}>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Active Memberships</h2>
-            <button className={styles.btnPrimary}>+ New Subscription</button>
+            <h2 className={styles.cardTitle}>Suscripciones Activas</h2>
+            <button className={styles.btnPrimary}>+ Nueva Suscripción</button>
           </div>
           <div className={styles.calendarList}>
             {memberships.length > 0 ? memberships.map((m: any) => (
@@ -38,23 +38,23 @@ export default function CRMDashboard() {
                 <div>{m.planName}</div>
                 <div className={styles.badge}>{m.status}</div>
               </div>
-            )) : <div className={styles.emptyState}>No active memberships found.</div>}
+            )) : <div className={styles.emptyState}>No hay membresías activas.</div>}
           </div>
         </div>
 
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Patient Documents</h2>
-            <button className={styles.btnOutline}>Upload Consent Form</button>
+            <h2 className={styles.cardTitle}>Documentos Legales (HIPAA)</h2>
+            <button className={styles.btnOutline}>Subir Consentimiento</button>
           </div>
           <div className={styles.calendarList}>
             {documents.length > 0 ? documents.map((doc: any) => (
               <div key={doc.id} className={styles.appointmentRow}>
                 <div>{doc.patient?.firstName} {doc.patient?.lastName}</div>
                 <div>{doc.type}</div>
-                <div className={doc.signed ? styles.badge : styles.badgeDanger}>{doc.signed ? 'Signed' : 'Pending'}</div>
+                <div className={doc.signed ? styles.badge : styles.badgeDanger}>{doc.signed ? 'Firmado' : 'Pendiente'}</div>
               </div>
-            )) : <div className={styles.emptyState}>No documents uploaded recently.</div>}
+            )) : <div className={styles.emptyState}>No hay documentos disponibles.</div>}
           </div>
         </div>
       </div>

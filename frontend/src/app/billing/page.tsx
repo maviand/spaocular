@@ -41,7 +41,7 @@ export default function BillingDashboard() {
 
   const handleGenerateInvoice = async () => {
     if (!patientId || items.length === 0) {
-      alert("Please select a patient and add at least one item.");
+      alert("Por favor seleccione un paciente y agregue al menos un artículo.");
       return;
     }
     try {
@@ -51,32 +51,32 @@ export default function BillingDashboard() {
         body: JSON.stringify({ patientId, items })
       });
       if (response.ok) {
-        alert("Invoice generated successfully!");
+        alert("¡Factura generada con éxito!");
         setItems([]);
       } else {
-        alert("Error generating invoice");
+        alert("Error al generar factura");
       }
     } catch (err) {
       console.error(err);
-      alert("Network error.");
+      alert("Error de red.");
     }
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Invoice Generator</h1>
+        <h1 className={styles.title}>Generador de Facturas</h1>
       </div>
 
       <div className={styles.card}>
         <div className={styles.formGroup}>
-          <label className={styles.label}>Select Patient</label>
+          <label className={styles.label}>Seleccionar Paciente</label>
           <select 
             className={styles.select} 
             value={patientId} 
             onChange={(e) => setPatientId(e.target.value)}
           >
-            <option value="">-- Choose Patient --</option>
+            <option value="">-- Elegir Paciente --</option>
             {patients.map(p => (
               <option key={p.id} value={p.id}>{p.firstName} {p.lastName} - {p.cedula}</option>
             ))}
@@ -84,9 +84,9 @@ export default function BillingDashboard() {
         </div>
 
         <div className={styles.flexBetween} style={{ marginTop: '2rem' }}>
-          <label className={styles.label}>Invoice Items</label>
+          <label className={styles.label}>Artículos de Factura</label>
           <button className={`${styles.btn} ${styles.btnOutline}`} onClick={handleAddItem}>
-            + Add Line Item
+            + Agregar Artículo
           </button>
         </div>
 
@@ -95,14 +95,14 @@ export default function BillingDashboard() {
             <input 
               type="text" 
               className={styles.input} 
-              placeholder="Description (e.g. LipiFlow, Consult)"
+              placeholder="Descripción (ej. Consulta, LipiFlow)"
               value={item.description}
               onChange={(e) => handleItemChange(item.id, 'description', e.target.value)}
             />
             <input 
               type="number" 
               className={styles.input} 
-              placeholder="Qty"
+              placeholder="Cant"
               min="1"
               value={item.quantity}
               onChange={(e) => handleItemChange(item.id, 'quantity', Number(e.target.value))}
@@ -110,13 +110,13 @@ export default function BillingDashboard() {
             <input 
               type="number" 
               className={styles.input} 
-              placeholder="Unit Price (DOP)"
+              placeholder="Precio Unitario (DOP)"
               min="0"
               value={item.unitPriceDop || ''}
               onChange={(e) => handleItemChange(item.id, 'unitPriceDop', Number(e.target.value))}
             />
             <button className={`${styles.btn} ${styles.btnDanger}`} onClick={() => handleRemoveItem(item.id)}>
-              Remove
+              Eliminar
             </button>
           </div>
         ))}
@@ -141,7 +141,7 @@ export default function BillingDashboard() {
               style={{ width: '100%', marginTop: '2rem' }}
               onClick={handleGenerateInvoice}
             >
-              Generate Invoice
+              Generar Factura
             </button>
           </div>
         )}

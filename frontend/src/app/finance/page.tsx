@@ -15,14 +15,14 @@ export default function FinanceDashboard() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Financial Management</h1>
-        <p className={styles.subtitle}>Expenses, Revenue Segmentation, & Analytics</p>
+        <h1 className={styles.title}>Finanzas</h1>
+        <p className={styles.subtitle}>Reportes de Gastos y Facturación</p>
       </header>
 
       <div className={styles.card}>
         <div className={styles.cardHeader}>
-          <h2 className={styles.cardTitle}>Daily Expenses</h2>
-          <button className={styles.btnPrimary}>+ Log Expense</button>
+          <h2 className={styles.cardTitle}>Gastos Recientes</h2>
+          <button className={styles.btnPrimary}>+ Registrar Gasto</button>
         </div>
         <div className={styles.calendarList}>
           {expenses.length > 0 ? expenses.map((expense: any) => (
@@ -32,7 +32,7 @@ export default function FinanceDashboard() {
               <div className={styles.badge}>{expense.category}</div>
               <div style={{ fontWeight: 'bold' }}>RD$ {expense.amountDop.toLocaleString()}</div>
             </div>
-          )) : <div className={styles.emptyState}>No expenses logged recently.</div>}
+          )) : <div className={styles.emptyState}>No se registraron gastos recientes.</div>}
         </div>
       </div>
     </div>

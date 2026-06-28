@@ -10,9 +10,9 @@ export default function DailyCalendar() {
     // Mocking for now to demonstrate the layout
     const timer = setTimeout(() => {
       setAppointments([
-        { id: '1', time: '08:00 AM', patientName: 'Maria Perez', reason: 'Dry Eye Follow-up', status: 'pending' },
-        { id: '2', time: '09:00 AM', patientName: 'Jose Castillo', reason: 'LipiFlow Treatment', status: 'pending' },
-        { id: '3', time: '10:30 AM', patientName: 'Ana Gomez', reason: 'Initial Consultation', status: 'pending' },
+        { id: '1', time: '08:00 AM', patientName: 'Maria Perez', reason: 'Seguimiento Ojo Seco', status: 'pendiente' },
+        { id: '2', time: '09:00 AM', patientName: 'Jose Castillo', reason: 'Tratamiento LipiFlow', status: 'pendiente' },
+        { id: '3', time: '10:30 AM', patientName: 'Ana Gomez', reason: 'Consulta Inicial', status: 'pendiente' },
       ]);
     }, 0);
     return () => clearTimeout(timer);
@@ -21,8 +21,8 @@ export default function DailyCalendar() {
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
-        <h2 className={styles.cardTitle}>Today&apos;s Appointments</h2>
-        <button className={styles.btnOutline}>View Full Calendar</button>
+        <h2 className={styles.cardTitle}>Citas de Hoy</h2>
+        <button className={styles.btnOutline}>Ver Calendario Completo</button>
       </div>
       
       <div className={styles.calendarList}>

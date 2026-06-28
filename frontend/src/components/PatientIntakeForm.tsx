@@ -25,32 +25,32 @@ export default function PatientIntakeForm() {
         body: JSON.stringify(formData)
       });
       if (response.ok) {
-        alert('Patient registered successfully!');
+        alert('¡Paciente registrado exitosamente!');
         setFormData({ firstName: '', lastName: '', cedula: '', email: '', phone: '', dob: '' });
       } else {
-        alert('Error registering patient');
+        alert('Error registrando paciente');
       }
     } catch (error) {
       console.error(error);
-      alert('Network error.');
+      alert('Error de red.');
     }
   };
 
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
-        <h2 className={styles.cardTitle}>New Patient Intake</h2>
-        <p className={styles.cardSubtitle}>Register a new patient into the system</p>
+        <h2 className={styles.cardTitle}>Nuevo Paciente</h2>
+        <p className={styles.cardSubtitle}>Registrar un nuevo paciente en el sistema</p>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGrid}>
           <div className={styles.formGroup}>
-            <label className={styles.label}>First Name</label>
+            <label className={styles.label}>Nombres</label>
             <input required type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={styles.input} />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Last Name</label>
+            <label className={styles.label}>Apellidos</label>
             <input required type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={styles.input} />
           </div>
           <div className={styles.formGroup}>
@@ -58,21 +58,21 @@ export default function PatientIntakeForm() {
             <input required type="text" name="cedula" value={formData.cedula} onChange={handleChange} className={styles.input} />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Date of Birth</label>
+            <label className={styles.label}>Fecha de Nacimiento</label>
             <input type="date" name="dob" value={formData.dob} onChange={handleChange} className={styles.input} />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Phone Number</label>
+            <label className={styles.label}>Teléfono</label>
             <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className={styles.input} />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Email Address</label>
+            <label className={styles.label}>Correo Electrónico</label>
             <input type="email" name="email" value={formData.email} onChange={handleChange} className={styles.input} />
           </div>
         </div>
         
         <div className={styles.formActions}>
-          <button type="submit" className={styles.btnPrimary}>Register Patient</button>
+          <button type="submit" className={styles.btnPrimary}>Registrar Paciente</button>
         </div>
       </form>
     </div>

@@ -26,23 +26,23 @@ export default function InventoryDashboard() {
       .catch((err) => console.error(err));
   }, []);
 
-  if (loading) return <div className={styles.container}>Loading inventory...</div>;
+  if (loading) return <div className={styles.container}>Cargando inventario...</div>;
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Clinic Inventory</h1>
+        <h1 className={styles.title}>Inventario de Clínica</h1>
       </div>
 
       <div className={styles.card}>
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>Item Name</th>
+              <th>Nombre del Ítem</th>
               <th>SKU</th>
-              <th>Price (DOP)</th>
-              <th>Current Stock</th>
-              <th>Status</th>
+              <th>Precio (DOP)</th>
+              <th>Stock Actual</th>
+              <th>Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -56,9 +56,9 @@ export default function InventoryDashboard() {
                   <td>{item.stock} / {item.minStockThreshold} (min)</td>
                   <td>
                     {isLowStock ? (
-                      <span className={`${styles.badge} ${styles.badgeAlert}`}>Low Stock</span>
+                      <span className={`${styles.badge} ${styles.badgeAlert}`}>Bajo Stock</span>
                     ) : (
-                      <span className={`${styles.badge} ${styles.badgeOk}`}>Optimal</span>
+                      <span className={`${styles.badge} ${styles.badgeOk}`}>Óptimo</span>
                     )}
                   </td>
                 </tr>
@@ -66,7 +66,7 @@ export default function InventoryDashboard() {
             })}
             {items.length === 0 && (
               <tr>
-                <td colSpan={5} style={{ textAlign: 'center' }}>No inventory items found.</td>
+                <td colSpan={5} style={{ textAlign: 'center' }}>No hay artículos en el inventario.</td>
               </tr>
             )}
           </tbody>

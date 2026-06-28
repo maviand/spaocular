@@ -21,15 +21,15 @@ export default function HRDashboard() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Clinic HR & Operations</h1>
-        <p className={styles.subtitle}>Staff Scheduling, Commissions & Attendance</p>
+        <h1 className={styles.title}>Recursos Humanos</h1>
+        <p className={styles.subtitle}>Gestión de Personal y Turnos</p>
       </header>
 
       <div className={styles.dashboardGrid}>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Staff Directory</h2>
-            <button className={styles.btnPrimary}>+ Add Staff</button>
+            <h2 className={styles.cardTitle}>Personal Clínico</h2>
+            <button className={styles.btnPrimary}>+ Agregar Personal</button>
           </div>
           <div className={styles.calendarList}>
             {staff.length > 0 ? staff.map((s: any) => (
@@ -37,22 +37,22 @@ export default function HRDashboard() {
                 <div>{s.name}</div>
                 <div className={styles.badge}>{s.role}</div>
               </div>
-            )) : <div className={styles.emptyState}>No staff members found.</div>}
+            )) : <div className={styles.emptyState}>No se encontró personal activo.</div>}
           </div>
         </div>
 
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Shift Scheduler</h2>
-            <button className={styles.btnOutline}>Assign Shift</button>
+            <h2 className={styles.cardTitle}>Turnos Asignados</h2>
+            <button className={styles.btnOutline}>Asignar Turno</button>
           </div>
           <div className={styles.calendarList}>
             {shifts.length > 0 ? shifts.map((shift: any) => (
               <div key={shift.id} className={styles.appointmentRow}>
-                <div>{shift.staff?.name || 'Unknown Staff'}</div>
+                <div>{shift.staff?.name || 'Personal Desconocido'}</div>
                 <div>{new Date(shift.startTime).toLocaleString()} - {new Date(shift.endTime).toLocaleTimeString()}</div>
               </div>
-            )) : <div className={styles.emptyState}>No shifts scheduled for this week.</div>}
+            )) : <div className={styles.emptyState}>No hay turnos programados.</div>}
           </div>
         </div>
       </div>
