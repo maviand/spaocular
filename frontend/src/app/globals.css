@@ -12,8 +12,8 @@
   --accent: #0077b6; /* Medical blue */
   --accent-light: rgba(0, 119, 182, 0.1);
   
-  --text-primary: #1d3557;
-  --text-secondary: #457b9d;
+  --text-primary: #0f172a; /* Slate 900 for stronger contrast */
+  --text-secondary: #334155; /* Slate 700 */
   --border: #dbe4eb;
   
   --danger: #e63946;
@@ -22,6 +22,9 @@
   /* Font */
   --font-sans: 'Product Sans', 'Google Sans', sans-serif;
   --font-mono: 'Product Sans', 'Google Sans', sans-serif; /* Forcing Google Sans everywhere */
+  
+  /* Shadow Variables */
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,12 +37,15 @@
     --accent: #0ff0d4; /* Phosphorescent teal */
     --accent-light: rgba(15, 240, 212, 0.15);
     
-    --text-primary: #f0f7ff;
-    --text-secondary: #8ba5c4;
+    --text-primary: #c2d6eb; /* Softer contrast in dark mode */
+    --text-secondary: #7a98b8;
     --border: #14304d;
     
     --danger: #ff476d;
     --success: #00d486;
+    
+    /* Shadow Variables */
+    --card-shadow: inset 0 0 40px rgba(15, 240, 212, 0.02), 0 4px 20px rgba(0,0,0,0.4);
   }
 }
 
@@ -49,6 +55,8 @@ body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
   
   /* Texture: Fine horizontal marks - scan lines */
   background-image: linear-gradient(rgba(20, 48, 77, 0.05) 1px, transparent 1px);

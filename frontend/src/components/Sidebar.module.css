@@ -23,6 +23,8 @@
   border: 2px solid var(--accent);
   box-shadow: 0 0 20px rgba(15, 240, 212, 0.2);
   margin-bottom: 1rem;
+  object-fit: cover;
+  object-position: center;
 }
 
 .logoTitle {
@@ -65,14 +67,16 @@
 }
 
 .link:hover {
-  background-color: var(--bg-tertiary);
+  background-color: var(--accent-light);
   color: var(--accent);
-  border-color: var(--border);
+  border-color: rgba(15, 240, 212, 0.3);
+  transform: translateX(4px);
 }
 
 .link:hover::before {
   background-color: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  transform: scale(1.2);
 }
 
 .footer {

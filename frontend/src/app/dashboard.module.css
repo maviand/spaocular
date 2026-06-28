@@ -29,7 +29,7 @@
   font-size: 2.2rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.75rem 0;
   letter-spacing: -0.03em;
 }
 
@@ -59,10 +59,11 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 2rem;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 40px rgba(15, 240, 212, 0.02), 0 4px 20px rgba(0,0,0,0.2);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 /* Concentric radial rings background for cards */
@@ -113,8 +114,8 @@
   background: var(--accent);
   color: var(--bg-primary);
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -125,15 +126,17 @@
 
 .btnPrimary:hover {
   background: #fff;
+  color: #0f172a;
   box-shadow: 0 0 15px var(--accent);
+  transform: translateY(-2px);
 }
 
 .btnOutline {
   background: transparent;
   color: var(--accent);
   border: 1px solid var(--accent);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -156,16 +159,18 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1.25rem;
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
   border-radius: 8px;
   align-items: center;
-  transition: border-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 .appointmentRow:hover {
   border-color: var(--accent);
+  transform: translateX(4px);
+  background: var(--accent-light);
 }
 
 .appointmentRow > div {
