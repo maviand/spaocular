@@ -21,9 +21,8 @@ export interface MedicalRecord {
   visualAcuityOS?: string | null;
   tbutOD?: number | null;
   tbutOS?: number | null;
-  notes?: string | null;
-  /** Not yet on the schema — optional display field for a future diagnosis column. */
   diagnosis?: string | null;
+  notes?: string | null;
 }
 
 export interface Membership {

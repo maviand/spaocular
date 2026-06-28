@@ -126,6 +126,7 @@ model MedicalRecord {
   tbutOD          Float?   // Tear break-up time
   tbutOS          Float?
   imagingUrl      String?  // Link to meibomian gland imaging
+  diagnosis       String?  // Clinical diagnosis / impression for this visit
   notes           String?
   createdAt       DateTime @default(now())
 }
